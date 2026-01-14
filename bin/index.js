@@ -1,8 +1,24 @@
 const { program } = require('commander');
+const { addExpense } = require('./db');
 
-program.option('-f, --first <char>', 'first option');
+function main() {
+  program
+    .name('expense-tracker')
+    .description('A simple CLI to track your expenses')
+    .version('1.0.0');
 
-program.parse();
+  program
+    .command('add')
+    .description('Add a new expense')
+    .requiredOption('-D, --description <string>', 'description of the expense')
+    .requiredOption(
+      '-A, --amount <number>',
+      'amount of the expense',
+      parseFloat
+    )
+    .action(addExpense);
 
-const options = program.opts();
-console.log(options);
+  program.parse();
+}
+
+main();
