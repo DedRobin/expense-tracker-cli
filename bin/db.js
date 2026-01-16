@@ -1,8 +1,7 @@
 const fs = require('node:fs/promises');
 
 const { getDatetime } = require('./services');
-
-const DB_PATH = 'db.csv';
+const { DB_PATH } = require('./constants');
 
 const addExpense = async (expense) => {
   if (!expense?.description) throw new Error('No description');
