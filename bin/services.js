@@ -11,4 +11,5 @@ const getDatetime = () => {
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 };
 
-module.exports = { getDatetime };
+const registerCommands = (commands) => commands.forEach((command) => command());
+module.exports = { getDatetime, registerCommands };
