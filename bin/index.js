@@ -1,8 +1,10 @@
 const { program } = require('commander');
+const commandAdd = require('./commands/add');
 
-program.option('-f, --first <char>', 'first option');
+function main() {
+  commandAdd();
 
-program.parse();
+  program.parse();
+}
 
-const options = program.opts();
-console.log(options);
+main();
