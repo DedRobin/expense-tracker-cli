@@ -1,5 +1,5 @@
 const { program } = require('commander');
-const { addExpense } = require('./db');
+const addExpense = require('./actions/add');
 
 function main() {
   program
