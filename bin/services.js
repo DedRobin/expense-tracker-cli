@@ -12,4 +12,5 @@ const getDatetime = () => {
 };
 
 const registerCommands = (commands) => commands.forEach((command) => command());
+
 module.exports = { getDatetime, registerCommands };

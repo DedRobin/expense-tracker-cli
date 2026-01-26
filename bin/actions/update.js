@@ -19,19 +19,21 @@ const updateExpense = async (expense) => {
   const updatedExpenses = expenses.map((expense) => {
     const expenseArray = expense.split(',');
     const targetExpenseId = expenseArray[0];
+
     if (targetExpenseId === updatedExpenseId) {
       expenseArray[1] = updatedExpenseDescr;
       expenseArray[2] = updatedExpenseAmount;
       expenseArray[3] = getDatetime();
+      const updatedExpense = expenseArray.join(',');
 
       expenseIsUpdated = true;
 
-      const updatedExpense = expenseArray.join(',');
       return updatedExpense;
     }
 
     return expense;
   });
+
   if (expenseIsUpdated) {
     console.log(`The expense (ID=${updatedExpenseId}) is updated.`);
   } else {

@@ -1,7 +1,9 @@
 const { program } = require('commander');
+
 const commandAdd = require('./commands/add');
 const commandUpdate = require('./commands/update');
 const { registerCommands } = require('./services');
+
 function main() {
   program
     .name('expense-tracker')
