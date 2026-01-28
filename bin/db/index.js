@@ -1,14 +1,16 @@
 const fs = require('node:fs/promises');
 
-const { DB_PATH, CSV_HEADER } = require('./constants');
+const { DB_PATH, CSV_HEADER } = require('../constants');
+const { convertRowsToObject } = require('./__services__');
 
 const getExpenses = async () => {
-  let expenses = [];
-
   try {
     const db = await fs.readFile(DB_PATH);
-    const expensesArray = db.toString().split('\n');
-    expenses = expensesArray.slice(1);
+    const rows = db.toString().split('\n');
+
+    const expenses = convertRowsToObject(rows);
+
+    return expenses;
   } catch (err) {
     const noSuchFile = err?.code && err.code === 'ENOENT';
     if (noSuchFile) {
@@ -19,11 +21,14 @@ const getExpenses = async () => {
     }
   }
 
-  return expenses;
+  return [];
 };
 
 const saveExpenses = async (expenses) => {
-  const updatedDb = CSV_HEADER + '\n' + expenses.join('\n');
+  const expensesAsRows = expenses.map((expense) =>
+    Object.values(expense).join(',')
+  );
+  const updatedDb = CSV_HEADER + '\n' + expensesAsRows.join('\n');
   try {
     await fs.writeFile(DB_PATH, updatedDb);
   } catch (err) {

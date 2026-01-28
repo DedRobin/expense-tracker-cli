@@ -1,19 +1,20 @@
 const { getExpenses, saveExpenses } = require('../db');
 
-const deleteExpense = async (expense) => {
-  if (!expense?.id) throw new Error('No ID');
+const deleteExpense = async (data) => {
+  if (!data?.id) throw new Error('No ID');
 
-  const { id: targetId } = expense;
+  const { id } = data;
+
+  const targetId = Number(id);
+  if (Number.isNaN(targetId)) throw new Error('Got NaN during deleting');
 
   const expenses = await getExpenses();
 
   let expenseIsDeleted = false;
 
-  const filteredExpenses = expenses.filter((expense) => {
-    const expenseArray = expense.split(',');
-    const expenseId = expenseArray[0];
-
-    const isFound = expenseId === targetId;
+  const filteredExpenses = expenses.filter((_, index) => {
+    const id = index + 1;
+    const isFound = id === targetId;
     if (isFound) expenseIsDeleted = true;
 
     return !isFound;

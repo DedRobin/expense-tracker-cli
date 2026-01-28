@@ -1,27 +1,19 @@
-const { getDatetime } = require('../services');
 const { getExpenses, saveExpenses } = require('../db');
+const { getDatetime } = require('../services');
 
 const addExpense = async (expense) => {
   if (!expense?.description) throw new Error('No description');
   if (!expense?.amount) throw new Error('No amount');
 
-  const { description, amount } = expense;
   const date = getDatetime();
 
   const expenses = await getExpenses();
 
-  const newRow = `0,${description},${amount},${date}`;
-  expenses.push(newRow);
+  const newExpense = { ...expense, date };
 
-  const expensesWithUpdatedId = expenses.map((expense, index) => {
-    const expenseId = expense[0];
-    if (index === expenseId) return expense;
-    const expenseArray = expense.split(',');
-    expenseArray[0] = index + 1;
-    return expenseArray.join(',');
-  });
+  expenses.push(newExpense);
 
-  await saveExpenses(expensesWithUpdatedId);
+  await saveExpenses(expenses);
 };
 
 module.exports = addExpense;

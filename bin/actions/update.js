@@ -1,43 +1,40 @@
 const { getExpenses, saveExpenses } = require('../db');
 const { getDatetime } = require('../services');
 
-const updateExpense = async (expense) => {
-  if (!expense?.id) throw new Error('No ID');
-  if (!expense?.description) throw new Error('No description');
-  if (!expense?.amount) throw new Error('No amount');
+const updateExpense = async (data) => {
+  if (!data?.id) throw new Error('No ID');
+  if (!data?.description) throw new Error('No description');
+  if (!data?.amount) throw new Error('No amount');
 
-  const {
-    id: updatedExpenseId,
-    description: updatedExpenseDescr,
-    amount: updatedExpenseAmount,
-  } = expense;
+  const { id, description, amount } = data;
+  const targetId = Number(id);
+
+  if (Number.isNaN(targetId)) throw new Error('Got NaN during updating');
 
   const expenses = await getExpenses();
 
   let expenseIsUpdated = false;
 
-  const updatedExpenses = expenses.map((expense) => {
-    const expenseArray = expense.split(',');
-    const targetExpenseId = expenseArray[0];
+  const updatedExpenses = expenses.map((expense, index) => {
+    const id = index + 1;
 
-    if (targetExpenseId === updatedExpenseId) {
-      expenseArray[1] = updatedExpenseDescr;
-      expenseArray[2] = updatedExpenseAmount;
-      expenseArray[3] = getDatetime();
-      const updatedExpense = expenseArray.join(',');
+    if (id === targetId) {
+      expense.description = description;
+      expense.amount = amount;
+      expense.date = getDatetime();
 
       expenseIsUpdated = true;
 
-      return updatedExpense;
+      return expense;
     }
 
     return expense;
   });
 
   if (expenseIsUpdated) {
-    console.log(`The expense (ID=${updatedExpenseId}) is updated.`);
+    console.log(`The expense (ID=${targetId}) is updated.`);
   } else {
-    console.log(`No such the expense with ID=${updatedExpenseId}`);
+    console.log(`No such the expense with ID=${targetId}`);
   }
 
   await saveExpenses(updatedExpenses);
