@@ -1,14 +1,15 @@
 const fs = require('node:fs/promises');
 
 const { DB_PATH, CSV_HEADER } = require('../constants');
-const { convertRowsToObject } = require('./__services__');
+const { convertToObjectsArray } = require('./__services__');
 
 const getExpenses = async () => {
   try {
     const db = await fs.readFile(DB_PATH);
-    const rows = db.toString().split('\n');
-
-    const expenses = convertRowsToObject(rows);
+    const headerAndRows = db.toString().split('\n');
+    // extract only rows from csvArray, without header
+    const [, ...rowsAsStringsArray] = headerAndRows;
+    const expenses = convertToObjectsArray(rowsAsStringsArray);
 
     return expenses;
   } catch (err) {

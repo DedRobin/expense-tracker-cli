@@ -1,5 +1,5 @@
-const convertRowsToObject = (rows) =>
-  rows.slice(1).map((row) => {
+const convertToObjectsArray = (rows) =>
+  rows.map((row) => {
     const [description, amount, date] = row.split(',');
     const expense = {};
     expense.description = description;
@@ -9,4 +9,4 @@ const convertRowsToObject = (rows) =>
     return expense;
   });
 
-module.exports = { convertRowsToObject };
+module.exports = { convertToObjectsArray };
