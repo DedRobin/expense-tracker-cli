@@ -1,4 +1,5 @@
 const { program } = require('commander');
+const summaryExpenses = require('../actions/summary');
 
 function commandUpdate() {
   program
@@ -12,7 +13,7 @@ function commandUpdate() {
       '-Y, --year [number]',
       'year, if ommited it is equel to the current year'
     )
-    .action(() => console.log('Summary'));
+    .action(summaryExpenses);
 }
 
 module.exports = commandUpdate;
