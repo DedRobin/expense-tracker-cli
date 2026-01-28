@@ -16,9 +16,7 @@ const updateExpense = async (data) => {
   let expenseIsUpdated = false;
 
   const updatedExpenses = expenses.map((expense, index) => {
-    const id = index + 1;
-
-    if (id === targetId) {
+    if (index === targetId) {
       expense.description = description;
       expense.amount = amount;
       expense.date = getDatetime();

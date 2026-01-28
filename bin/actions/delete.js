@@ -13,8 +13,7 @@ const deleteExpense = async (data) => {
   let expenseIsDeleted = false;
 
   const filteredExpenses = expenses.filter((_, index) => {
-    const id = index + 1;
-    const isFound = id === targetId;
+    const isFound = index === targetId;
     if (isFound) expenseIsDeleted = true;
 
     return !isFound;
