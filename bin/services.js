@@ -1,3 +1,5 @@
+const { toNumber } = require('./tools');
+
 const getDatetime = () => {
   const now = new Date();
 
@@ -11,6 +13,18 @@ const getDatetime = () => {
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 };
 
+const convertToTime = (datetimeString) => {
+  const [datePart, timePart] = datetimeString.split(' ');
+
+  const [day, month, year] = datePart.split('.').map(toNumber);
+  const [hours, minutes, seconds] = timePart.split(':').map(toNumber);
+
+  const dateObject = new Date(year, month - 1, day, hours, minutes, seconds, 0);
+  const time = dateObject.getTime();
+
+  return time;
+};
+
 const registerCommands = (commands) => commands.forEach((command) => command());
 
-module.exports = { getDatetime, registerCommands };
+module.exports = { getDatetime, registerCommands, convertToTime };
