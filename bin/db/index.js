@@ -9,6 +9,10 @@ const getExpenses = async () => {
     const headerAndRows = db.toString().split('\n');
     // extract only rows from csvArray, without header
     const [, ...rowsAsStringsArray] = headerAndRows;
+
+    // check that rowsAsStringsArray is not empty (equel [] or [''])
+    if (!rowsAsStringsArray || !rowsAsStringsArray[0]) return [];
+
     const expenses = convertToObjectsArray(rowsAsStringsArray);
 
     return expenses;
