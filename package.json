@@ -1,0 +1,37 @@
+{
+  "name": "expense-tracker-cli",
+  "version": "1.0.0",
+  "description": "This is a simple expense tracker application to manage your finances.",
+  "homepage": "https://github.com/DedRobin/expense-tracker-cli#readme",
+  "bugs": {
+    "url": "https://github.com/DedRobin/expense-tracker-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DedRobin/expense-tracker-cli.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "app": "node ./bin/index.js",
+    "lint": "eslint ./bin --ext .js",
+    "lint:fix": "eslint --fix ./bin --ext .js"
+  },
+  "bin": {
+    "expense-tracker": "./bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^14.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^17.0.0",
+    "prettier": "^3.7.4"
+  }
+}
